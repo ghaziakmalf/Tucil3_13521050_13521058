@@ -54,8 +54,8 @@ export class Graph{
         
         will print:
         0 = (1,10)(2,5)
-        1 =
-        2 =
+        1 = (0,10)
+        2 = (0,5)
     */
     print(){
         if(this.neff > 0){

@@ -9,6 +9,8 @@ graph1.addNode(); // node 2
 
 graph1.addEdge(0, 1, 10);
 graph1.addEdge(0, 2, 5);
+graph1.addEdge(1, 0, 10);
+graph1.addEdge(2, 0, 5);
 
 graph1.print();
 

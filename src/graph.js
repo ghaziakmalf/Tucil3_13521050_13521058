@@ -20,6 +20,8 @@ export class Graph{
     constructor(){
         this.nodes = [];
         this.neff = 0;
+        this.startNode;
+        this.finishNode;
     }
 
     // add empty node without child node

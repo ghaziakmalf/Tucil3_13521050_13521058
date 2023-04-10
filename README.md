@@ -1,7 +1,7 @@
-# Finding the Closest Path between Two Nodes with _UCS (Uniform Cost Search) and A* (A-star)_ Algorithm
+# Finding the Closest Path between Two Nodes with _UCS (Uniform Cost Search)_ and _A* (A-star)_ Algorithm
 
 ## Table of Contents
-- [Finding the Closest Path between Two Nodes with _UCS (Uniform Cost Search) and A\* (A-star)_ Algorithm](#finding-the-closest-path-between-two-nodes-with-ucs-uniform-cost-search-and-a-a-star-algorithm)
+- [Finding the Closest Path between Two Nodes with _UCS (Uniform Cost Search)_ and _A\* (A-star)_ Algorithm](#finding-the-closest-path-between-two-nodes-with-ucs-uniform-cost-search-and-a-a-star-algorithm)
   - [Table of Contents](#table-of-contents)
   - [Program Description](#program-description)
   - [Algorithm](#algorithm)
@@ -17,7 +17,7 @@
 In this project, the authors were tasked to develop a program to find the closest path between two nodes. Each node is connected by a line that has weight. The weight of the line is the distance between the two points. This weight is represented by adjacency matrix. The program will look for the shortest path from the starting point to the destination point using the UCS and A* algorithms. The program will display the path found and its weight. The program will also display the total cost, number of calculations, execution time, and system platform to find the path.
 
 ## Algorithm
-This project uses 2 algorithms, UCS (Uniform Cost Search) and A* (A-star). [UCS (Uniform Cost Search)](https://www.geeksforgeeks.org/uniform-cost-search-dijkstra-for-large-graphs/) and [A* (A-star)](https://www.geeksforgeeks.org/a-search-algorithm/) are both algorithms used in computer science and artificial intelligence to search for paths in graphs or trees.
+This project uses 2 algorithms, [UCS (Uniform Cost Search)](https://www.geeksforgeeks.org/uniform-cost-search-dijkstra-for-large-graphs/) and [A* (A-star)](https://www.geeksforgeeks.org/a-search-algorithm/). UCS (Uniform Cost Search) and A* (A-star) are both algorithms used in computer science and artificial intelligence to search for paths in graphs or trees.
 
 ### UCS (Uniform Cost Search)
 UCS is a graph search algorithm that finds the shortest path from a starting node to a goal node by considering the cost of each path. It explores the graph by expanding the node with the lowest cumulative cost (i.e., the path with the smallest total cost) at each step. It maintains a priority queue (often implemented using a heap data structure) to keep track of the nodes to be expanded, with the node with the lowest cost being expanded first. UCS continues to expand nodes and update the costs until the goal node is reached or all reachable nodes have been explored.

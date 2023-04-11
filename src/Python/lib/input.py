@@ -79,6 +79,109 @@ def inputFile():
     return nodes, matrix
 
 
+def inputManual():
+    """
+    Input manual from user. Ask for how many nodes (>=3), nodes name, and weight for each nodes
+    Input: -
+    Output: Nodes name (array of string), adjacency matrix (matrix of integer)
+    """
+    while True:
+        try:
+            # Input number of nodes
+            num_nodes = input(WHITE + "\nEnter the number of nodes (>=3): " + RESET)
+
+            # Check if input is empty, raise error
+            if (num_nodes == ""):
+                raise ValueError("Input has not been filled!")
+            
+            # Check if input is integer, raise error
+            try:
+                num_nodes = int(num_nodes)
+            except ValueError:
+                raise ValueError("Input is not an integer!")
+
+            # Check if number of nodes is less than 3, raise error
+            if num_nodes < 3:
+                raise ValueError("Number of nodes must be >=3!")
+
+            # Input nodes name
+            nodes = []
+            print("")
+            for i in range(num_nodes):
+                while True:
+                    node_name = input(f"{WHITE}Enter the name of node {i + 1}: {RESET}")
+
+                    # Check if input is empty, raise error
+                    if (node_name == ""):
+                        print(LIGHT_RED + "\nInput has not been filled! Please re-enter.\n" + RESET)
+                        continue
+
+                    # Check if node name is already exist, raise error
+                    if node_name in nodes:
+                        print(LIGHT_RED + "\nNode name is already exist! Please re-enter.\n" + RESET)
+                        continue
+
+                    # If pass all the checks, break the loop
+                    break
+
+                nodes.append(node_name)
+
+            # Input upper triangle matrix
+            matrix = []
+            print("")
+            for i in range(num_nodes):
+                matrix.append([0] * i)
+                for j in range(i, num_nodes):
+                    if i == j:
+                        matrix[i].append(0)
+                    else:
+                        while True:
+                            weight = input(f"{WHITE}Enter the weight of edge between {nodes[i]} and {nodes[j]}: {RESET}")
+
+                            # Check if input is empty, raise error
+                            if (weight == ""):
+                                print(LIGHT_RED + "\nInput has not been filled! Please re-enter.\n" + RESET)
+                                continue
+
+                            # Check if input is integer, raise error
+                            try:
+                                weight = int(weight)
+                            except ValueError:
+                                print(LIGHT_RED + "\nInput is not an integer! Please re-enter.\n" + RESET)
+                                continue
+
+                            # Check if weight is less than 0, raise error
+                            if weight < 0:
+                                print(LIGHT_RED + "\nWeight must be >=0! Please re-enter.\n" + RESET)
+                                continue
+
+                            # If pass all the checks, break the loop
+                            break
+                        
+                        matrix[i].append(weight)        
+
+            # Copy the upper triangle to lower triangle to make adjacency matrix
+            for i in range(num_nodes):
+                for j in range(num_nodes):
+                    matrix[j][i] = matrix[i][j]
+
+            # Check if matrix is symmetric, raise error
+            for i in range(num_nodes):
+                for j in range(num_nodes):
+                    if matrix[i][j] != matrix[j][i]:
+                        raise ValueError("Adjacency matrix must be symmetric!")
+
+            # If pass all the checks, break the loop
+            break
+
+        # For print error message
+        except ValueError as e:
+            print(LIGHT_RED + "\n" + str(e) + " Please re-enter." + RESET)
+            continue
+
+    return nodes, matrix
+
+
 def inputInteger(min, max):
     """
     For handling input integer. Check if input is integer and in range (from min to max)

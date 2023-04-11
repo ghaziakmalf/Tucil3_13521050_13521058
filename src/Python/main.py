@@ -18,7 +18,7 @@ def main():
     while (process == 1):
         print("")
         commandInputOption()
-        option = inputInteger(1, 2)
+        option = inputInteger(1, 3)
 
         # Option 1: File input
         if (option == 1):
@@ -28,8 +28,15 @@ def main():
             plot("", nodes, matrix, [], None)
 
         # Option 2: Google Maps input
-        else:
+        elif (option == 2):
             print(LIGHT_RED + "\nSorry, this feature is not available yet." + RESET)
+
+        # Option 3: Manual input
+        else:
+            nodes, matrix = inputManual()
+
+            # Plot the graph
+            plot("", nodes, matrix, [], None)
 
         # Get start and stop node
         start, stop = inputStartStop(nodes)

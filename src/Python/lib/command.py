@@ -41,6 +41,7 @@ def commandInputOption():
     print(WHITE     + "==========================================")
     print(LIGHT_RED + "1." + WHITE + " FILE")
     print(LIGHT_RED + "2." + WHITE + " GOOGLE MAPS")
+    print(LIGHT_RED + "3." + WHITE + " MANUAL")
 
 
 def commandSave():

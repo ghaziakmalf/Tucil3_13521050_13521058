@@ -32,13 +32,20 @@ def inputFile():
             nodesLine = file.readline()
             nodes = []
 
-            # Insert nodes name into array
-            for node in nodesLine.strip().split():
-                nodes.append(str(node))
+            # Insert nodes name into array and check if nodes name is valid
+            try:
+                for node in nodesLine.strip().split():
+                    nodes.append(str(node))
+            except ValueError:
+                raise ValueError("Nodes name must be alphabet!")
 
             # Check if nodes < 8, raise error
             if (len(nodes) < 8):
                 raise ValueError("Number of nodes must be at least 8!")
+            
+            # Check duplicate node name, raise error
+            if (len(nodes) != len(set(nodes))):
+                raise ValueError("Node name must be unique!")
 
             # Read the rest of the file (adjacency matrix)
             matrix = []

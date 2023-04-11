@@ -25,14 +25,14 @@ def plot (title, nodes, matrix, path, saveConfig):
     # Compute node positions using spring layout algorithm
     pos = nx.spring_layout(G)
 
-    # Draw graph with node positions from spring layout, show labels in bold
-    nx.draw(G, pos, with_labels=True, font_weight='bold')
+    # Draw graph with node positions from spring layout, show labels in bold, set font size for node labels
+    nx.draw(G, pos, with_labels=True, font_weight='bold', font_size=7)
 
     # Get edge labels from 'weight' attribute of graph G
     edge_labels = nx.get_edge_attributes(G, 'weight')
 
-    # Draw edge labels on graph G with bold font
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_weight='bold')
+    # Draw edge labels on graph G with bold font, set font size for edge labels
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_weight='bold', font_size=7)
 
     # Compute edge colors based on whether edge is in graph G or not
     edge_colors = ['b' if (path[i], path[i+1]) in nx.edges(G) else 'k' for i in range(len(path)-1)]
@@ -43,7 +43,7 @@ def plot (title, nodes, matrix, path, saveConfig):
     # Draw edges on graph G with edge colors based on edge_colors list
     nx.draw_networkx_edges(G, pos, edge_color=edge_colors)
 
-    # Set title
+    # Set title, set font size for title
     plt.suptitle(title, fontsize=10)
 
     # Show or save plot

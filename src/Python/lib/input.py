@@ -1,5 +1,5 @@
 import os
-
+import googlemaps
 from lib.colors import *
 
 def inputFile():
@@ -257,3 +257,59 @@ def inputStartStop(nodes):
             continue
 
     return start, stop
+
+
+def inputMap(gmapsClient):
+
+    print("Input a place, landmark, or address. Recommended to put spesific address or full name of a landmark")
+    print("landmark: Empire State Building, Insitut Teknologi Bandung, or Gedung Sate")
+    print("address: Jl.Cisitu, Dago, Coblong, Bandung Kidul (Complete Address)\n")
+
+    n = int(input("How many place (node)? "))
+
+    places_name = []
+    address = []
+    places_id = [] # filled with place_id
+    matrix = [[0 for i in range (n)] for j in range (n)]
+    i = 0
+
+    # Input all nodes
+    for i in range(n):
+        while(True):
+            address_input = input("\nInsert location: ")
+            location = gmapsClient.geocode(address = address_input)[0]
+            if location:
+                break
+            else:
+                print("Location Not Found")
+
+        print("\nObtained Location Address: ")
+        print(location["formatted_address"])
+        address.append(location["formatted_address"])
+        places_name.append(address_input)
+        places_id.append(location['place_id'])
+
+    # input relations
+
+    # PRINT ALL NODE
+    print("List of Place")
+    for i in range(n):
+        print(f"{i+1}. {places_name[i]} ({address[i]})")
+
+    # INPUT ROUTE
+    n = int(input("How many route (edge)? "))
+    for i in range(n):
+        while(True):
+            a, b = input("Input two place index to connect (e.g. 1 5) ").split()
+            a = int(a) 
+            b = int(b) 
+
+            if((a > 0 and a <= len(places_id) and b <= len(places_id) and b > 0) and a != b):
+                distance = gmapsClient.distance_matrix(f"place_id:{places_id[a-1]}", f"place_id:{places_id[b-1]}")["rows"][0]["elements"][0]['distance']['value']
+                matrix[a-1][b-1] = distance
+                matrix[b-1][a-1] = distance
+                break
+            else:
+                print("Input tidak dalam range")
+    
+    return places_name, places_id, matrix

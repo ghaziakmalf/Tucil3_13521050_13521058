@@ -5,6 +5,7 @@ from lib.input import *
 from lib.output import *
 from lib.ucs import *
 from lib.astar import *
+import googlemaps
 
 def main():
     # Show splash screen
@@ -29,7 +30,10 @@ def main():
 
         # Option 2: Google Maps input
         elif (option == 2):
-            print(LIGHT_RED + "\nSorry, this feature is not available yet." + RESET)
+            gmapsClient = googlemaps.Client("AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs")
+            nodes, places_id, matrix = inputMap(gmapsClient)
+
+            plot("", nodes, matrix, [], None)
 
         # Option 3: Manual input
         else:

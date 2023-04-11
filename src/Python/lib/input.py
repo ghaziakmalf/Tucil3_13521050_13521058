@@ -79,10 +79,10 @@ def inputFile():
     return nodes, matrix
 
 
-def inputInteger(range):
+def inputInteger(min, max):
     """
-    For handling input integer. Check if input is integer and in range (from 1 to range)
-    Input: range (integer)
+    For handling input integer. Check if input is integer and in range (from min to max)
+    Input: min, max (integer)
     Output: val (integer)
     """
 
@@ -100,10 +100,10 @@ def inputInteger(range):
                 raise ValueError("Input is not an integer!")
             
             # Check if input is in range, break the loop
-            if (val >= 1 and val <= range):
+            if (val >= min and val <= max):
                 break
             else:
-                print(LIGHT_RED + "\nPlease enter a valid input! (1-" + str(range) + ")" + RESET)
+                print(LIGHT_RED + "\nPlease enter a valid input! (" + str(min) + "-" + str(max) + ")" + RESET)
 
         # For print error message
         except ValueError as e:

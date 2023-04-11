@@ -12,13 +12,13 @@ def main():
 
     # Start program
     commandStart()
-    process = inputInteger(2)
+    process = inputInteger(1, 2)
 
     # Loop until user exit
     while (process == 1):
         print("")
         commandInputOption()
-        option = inputInteger(2)
+        option = inputInteger(1, 2)
 
         # Option 1: File input
         if (option == 1):
@@ -37,7 +37,7 @@ def main():
         # Pick algorithm
         print("")
         commandAlgorithm()
-        algorithm = inputInteger(3)
+        algorithm = inputInteger(1, 3)
 
         # Run Uniform Cost Search (UCS)
         if (algorithm == 1) or (algorithm == 3):
@@ -76,7 +76,7 @@ def main():
         # Save option
         print("")
         commandSave()
-        save = inputInteger(2)
+        save = inputInteger(1, 2)
 
         # Save to file
         if (save == 1):
@@ -97,7 +97,7 @@ def main():
         # Try again option, continue loop if yes
         print(LIGHT_GREEN + "\nDo you want to try again?\n" + RESET)
         commandStart()
-        process = inputInteger(2)
+        process = inputInteger(1, 2)
 
     # Outside loop. Exit program
     print(LIGHT_GREEN + "\nThank you for using Shortest Path Solver!\n" + RESET)    

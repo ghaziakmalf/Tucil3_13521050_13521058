@@ -1,4 +1,19 @@
-A Z T O L M S D R F C P B 
+Nodes:
+A
+Z
+T
+O
+L
+M
+S
+D
+R
+F
+C
+P
+B
+
+Matrix:
 0 75 118 0 0 0 140 0 0 0 0 0 0 
 75 0 0 71 0 0 0 0 0 0 0 0 0 
 118 0 0 0 111 0 0 0 0 0 0 0 0 
@@ -13,11 +28,29 @@ A Z T O L M S D R F C P B
 0 0 0 0 0 0 0 0 97 0 138 0 101 
 0 0 0 0 0 0 0 0 0 211 0 101 0 
 
-============== UNIFORM COST SEARCH ===============
+Weight for each node:
+A <-> Z = 75
+A <-> T = 118
+A <-> S = 140
+Z <-> O = 71
+T <-> L = 111
+O <-> S = 151
+L <-> M = 70
+M <-> D = 75
+S <-> R = 80
+S <-> F = 99
+D <-> R = 120
+R <-> C = 146
+R <-> P = 97
+F <-> B = 211
+C <-> P = 138
+P <-> B = 101
+
+=============== UNIFORM COST SEARCH ===============
 Start node: A
-Stop node: B
-Shortest path: A -> S -> R -> P -> B
-Total cost: 418
-Number of calculations: 13
+Stop node: F
+Shortest path: A -> S -> F
+Total cost: 239
+Number of calculations: 8
 Execution time: 0.00 ms
 Processor: AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD

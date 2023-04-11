@@ -287,7 +287,7 @@ def inputMap(gmapsClient):
 
     places_name = []
     address = []
-    places_id = [] # filled with place_id
+    places_id = []
     matrix = [[0 for i in range (n)] for j in range (n)]
     i = 0
 
@@ -295,17 +295,17 @@ def inputMap(gmapsClient):
     for i in range(n):
         while(True):
             address_input = input("\nInsert location: ")
-            location = gmapsClient.geocode(address = address_input)[0]
+            location = gmapsClient.geocode(address = address_input)
             if location:
                 break
             else:
                 print("Location Not Found")
 
         print("\nObtained Location Address: ")
-        print(location["formatted_address"])
-        address.append(location["formatted_address"])
+        print(location[0]["formatted_address"])
+        address.append(location[0]["formatted_address"])
         places_name.append(address_input)
-        places_id.append(location['place_id'])
+        places_id.append(location[0]['place_id'])
 
     # input relations
 

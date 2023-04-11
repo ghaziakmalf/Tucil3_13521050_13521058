@@ -5,6 +5,8 @@ from lib.input import *
 from lib.output import *
 from lib.ucs import *
 from lib.astar import *
+from PIL import Image
+import matplotlib
 import googlemaps
 
 def main():
@@ -24,15 +26,30 @@ def main():
         # Option 1: File input
         if (option == 1):
             nodes, matrix = inputFile()
+            print(matrix)
             
             # Plot the graph
             plot("", nodes, matrix, [], None)
 
         # Option 2: Google Maps input
         elif (option == 2):
+            # input location and route from map
             gmapsClient = googlemaps.Client("AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs")
             nodes, places_id, matrix = inputMap(gmapsClient)
+            
+            # download image from google map
+            f = open('map_buffer', 'wb')
+            for iter in gmapsClient.static_map(size=(500,500),markers=places_id):
+                if iter:
+                    f.write(iter)
+            f.close()
 
+            with open('map_buffer', 'rb') as f:
+                imageByte = bytearray(f.read())
+            image = Image.frombytes('RGB',(500,500),imageByte,'raw')
+            image.show()
+
+            # plot the graph
             plot("", nodes, matrix, [], None)
 
         # Option 3: Manual input

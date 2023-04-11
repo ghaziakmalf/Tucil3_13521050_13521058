@@ -25,14 +25,14 @@ def plot (title, nodes, matrix, path, saveConfig):
     # Compute node positions using spring layout algorithm
     pos = nx.spring_layout(G)
 
-    # Draw graph with node positions from spring layout, show labels in bold
-    nx.draw(G, pos, with_labels=True, font_weight='bold')
+    # Draw graph with node positions from spring layout, show labels in bold, set font size for node labels
+    nx.draw(G, pos, with_labels=True, font_weight='bold', font_size=7)
 
     # Get edge labels from 'weight' attribute of graph G
     edge_labels = nx.get_edge_attributes(G, 'weight')
 
-    # Draw edge labels on graph G with bold font
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_weight='bold')
+    # Draw edge labels on graph G with bold font, set font size for edge labels
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_weight='bold', font_size=7)
 
     # Compute edge colors based on whether edge is in graph G or not
     edge_colors = ['b' if (path[i], path[i+1]) in nx.edges(G) else 'k' for i in range(len(path)-1)]
@@ -43,7 +43,7 @@ def plot (title, nodes, matrix, path, saveConfig):
     # Draw edges on graph G with edge colors based on edge_colors list
     nx.draw_networkx_edges(G, pos, edge_color=edge_colors)
 
-    # Set title
+    # Set title, set font size for title
     plt.suptitle(title, fontsize=10)
 
     # Show or save plot
@@ -60,7 +60,10 @@ def printResult(algorithm, start, stop, nCalc, path, totalCost, time):
     Output: Print result
     """
 
-    print(WHITE + "\n============== " + LIGHT_RED + str(algorithm) + WHITE + " ===============")
+    if (algorithm == "UNIFORM COST SEARCH"):
+        print(WHITE + "\n=============== " + LIGHT_RED + "UNIFORM COST SEARCH" + WHITE + " ===============")
+    else:
+        print(WHITE + "\n======================= " + LIGHT_RED + "A*" + WHITE + " ========================")
     print(WHITE + "Start node: " + YELLOW + str(start))
     print(WHITE + "Stop node: " + YELLOW + str(stop))
     print(WHITE + "Shortest path: " + YELLOW + " -> ".join(str(p) for p in path))
@@ -95,22 +98,34 @@ def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matr
         plot(algorithm, nodes, matrix, path, "test/" + saveConfig + "/" + saveConfig + "UCS.png")
 
     # Save nodes
+    f.write("Nodes:\n")
     for i in range(len(nodes)):
-        f.write(str(nodes[i]) + " ")
+        f.write(str(nodes[i]) + "\n")
     f.write("\n")
 
     # Save matrix
+    f.write("Matrix:\n")
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             f.write(str(matrix[i][j]) + " ")
         f.write("\n")
+
+    # Save weight for each connected node
+    f.write("\nWeight for each node:\n")
+    for i in range(len(nodes)):
+        for j in range(i+1, len(nodes)):
+            if (matrix[i][j] != 0):
+                f.write(str(nodes[i]) + " <-> " + str(nodes[j]) + " = " + str(matrix[i][j]) + "\n")
     
     # Save result
-    f.write("\n============== " + str(algorithm) + " ===============\n")
+    if (algorithm == "UNIFORM COST SEARCH"):
+        f.write("\n=============== " + "UNIFORM COST SEARCH" + " ===============\n")
+    else:
+        f.write("\n======================= " + "A*" + " ========================\n")
     f.write("Start node: " + str(start) + "\n")
     f.write("Stop node: " + str(stop) + "\n")
     f.write("Shortest path: " + " -> ".join(str(p) for p in path) + "\n")
     f.write("Total cost: " + str(totalCost) + "\n")
     f.write("Number of calculations: " + str(nCalc) + "\n")
     f.write("Execution time: " + "{:.2f} ms".format(time * 1000) + "\n")
-    f.write("Processor: " + str(platform.processor()) + "\n")
+    f.write("Processor: " + str(platform.processor()))

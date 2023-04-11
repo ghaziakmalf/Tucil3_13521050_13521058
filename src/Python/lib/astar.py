@@ -1,14 +1,34 @@
 from heapq import heappush, heappop
 
-def heuristic(nodes, matrix, start, stop):
+def heuristic(nodes, matrix, current, goal):
     """
-    Heuristic function
-    Input: nodes (array of string), matrix (2D array of integer), start (string), stop (string)
-    Output: h (array of integer)
+    Manhattan distance heuristic
+    Input: nodes (array of string), matrix (2D array of integer), current (string), goal (string)
+    Output: h (dictionary)
     """
-    h = {}  # Using a dictionary for faster lookups
+
+    # Initialize the heuristic dictionary with initial values as infinity for all nodes
+    h = {node: float('inf') for node in nodes}
+
+    # Set the heuristic value for the current node to 0
+    h[current] = 0
+
+    # Get the index of the goal node
+    goal_idx = nodes.index(goal)
+
+    # Get the coordinates of the goal node
+    goal_x, goal_y = goal_idx // 3, goal_idx % 3
+
+    # Loop through all the nodes
     for node in nodes:
-        h[node] = matrix[nodes.index(start)][nodes.index(node)] + matrix[nodes.index(node)][nodes.index(stop)]
+
+        # Get the index and coordinates of the current node
+        node_idx = nodes.index(node)
+        node_x, node_y = node_idx // 3, node_idx % 3
+
+        # Calculate the Manhattan distance from current node to goal node
+        h[node] = abs(node_x - goal_x) + abs(node_y - goal_y)
+
     return h
 
 
@@ -56,6 +76,10 @@ def astar(nodes, matrix, start, stop):
 
                     # Calculate the new f value using the heuristic
                     new_f = new_cost + h[nodes[i]]
+
+                    # Update the heuristic value for the next iteration
+                    if nodes[i] not in h or new_f < h[nodes[i]]:
+                        h[nodes[i]] = new_f
 
                     # Append the new node to queue
                     heappush(queue, (new_f, new_cost, nodes[i], path + [nodes[i]]))

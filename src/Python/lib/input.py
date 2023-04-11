@@ -32,13 +32,20 @@ def inputFile():
             nodesLine = file.readline()
             nodes = []
 
-            # Insert nodes name into array
-            for node in nodesLine.strip().split():
-                nodes.append(str(node))
+            # Insert nodes name into array and check if nodes name is valid
+            try:
+                for node in nodesLine.strip().split():
+                    nodes.append(str(node))
+            except ValueError:
+                raise ValueError("Nodes name must be alphabet!")
 
             # Check if nodes < 8, raise error
             if (len(nodes) < 8):
                 raise ValueError("Number of nodes must be at least 8!")
+            
+            # Check duplicate node name, raise error
+            if (len(nodes) != len(set(nodes))):
+                raise ValueError("Node name must be unique!")
 
             # Read the rest of the file (adjacency matrix)
             matrix = []
@@ -113,12 +120,12 @@ def inputManual():
 
                     # Check if input is empty, raise error
                     if (node_name == ""):
-                        print(LIGHT_RED + "\nInput has not been filled! Please re-enter.\n" + RESET)
+                        print(LIGHT_RED + "\nInput has not been filled! Please re-enter." + RESET)
                         continue
 
                     # Check if node name is already exist, raise error
                     if node_name in nodes:
-                        print(LIGHT_RED + "\nNode name is already exist! Please re-enter.\n" + RESET)
+                        print(LIGHT_RED + "\nNode name is already exist! Please re-enter." + RESET)
                         continue
 
                     # If pass all the checks, break the loop
@@ -140,19 +147,19 @@ def inputManual():
 
                             # Check if input is empty, raise error
                             if (weight == ""):
-                                print(LIGHT_RED + "\nInput has not been filled! Please re-enter.\n" + RESET)
+                                print(LIGHT_RED + "\nInput has not been filled! Please re-enter." + RESET)
                                 continue
 
                             # Check if input is integer, raise error
                             try:
                                 weight = int(weight)
                             except ValueError:
-                                print(LIGHT_RED + "\nInput is not an integer! Please re-enter.\n" + RESET)
+                                print(LIGHT_RED + "\nInput is not an integer! Please re-enter." + RESET)
                                 continue
 
                             # Check if weight is less than 0, raise error
                             if weight < 0:
-                                print(LIGHT_RED + "\nWeight must be >=0! Please re-enter.\n" + RESET)
+                                print(LIGHT_RED + "\nWeight must be >=0! Please re-enter." + RESET)
                                 continue
 
                             # If pass all the checks, break the loop
@@ -229,22 +236,33 @@ def inputStartStop(nodes):
 
     while (True):
         try:
-            # Read start and stop node and also check if start and stop node already inputted
+            # Read start and stop node and check if input is already filled
             try:
-                start, stop = input(WHITE + "Input start and stop nodes (e.g. A B): " + RESET).split()
+                start, stop = input(WHITE + "Input start and stop nodes (e.g. 1 2): " + RESET).split()
             except ValueError:
-                raise ValueError("Input must be 2 nodes!")
+                raise ValueError("Input has not been filled!")
             
+            # Check if input is integer, raise error
+            try:
+                start = int(start) - 1
+                stop = int(stop) - 1
+            except ValueError:
+                raise ValueError("Input is not an integer!")
+            
+            # Check if input is in range, raise error
+            if (start < 0 or start >= len(nodes) or stop < 0 or stop >= len(nodes)):
+                raise ValueError("Input is not in range! Please re-enter.")
+
             # Check if start and stop node is in nodes array, raise error
-            if (start not in nodes and stop not in nodes):
+            if (nodes[start] not in nodes and nodes[stop] not in nodes):
                 raise ValueError("Start and stop node is not in the graph! Please re-enter.")
             
             # Check if start node is in nodes array, raise error
-            elif (start not in nodes):
+            elif (nodes[start] not in nodes):
                 raise ValueError("Start node is not in the graph! Please re-enter.")
             
             # Check if stop node is in nodes array, raise error
-            elif (stop not in nodes):
+            elif (nodes[stop] not in nodes):
                 raise ValueError("Stop node is not in the graph! Please re-enter.")
             
             # If pass all the checks, break the loop

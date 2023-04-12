@@ -1,0 +1,23 @@
+Nodes:
+Bandung
+Jakarta
+Bogor
+
+Matrix:
+0 150943 181868 
+150943 0 56158 
+181868 56158 0 
+
+Weight for each node:
+Bandung <-> Jakarta = 150943
+Bandung <-> Bogor = 181868
+Jakarta <-> Bogor = 56158
+
+======================= A* ========================
+Start node: Bandung
+Stop node: Bogor
+Shortest path: Bandung -> Bogor
+Total cost: 181868
+Number of calculations: 3
+Execution time: 0.00 ms
+Processor: Intel64 Family 6 Model 142 Stepping 12, GenuineIntel

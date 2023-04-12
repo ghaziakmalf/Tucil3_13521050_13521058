@@ -1,0 +1,23 @@
+Nodes:
+Institut Teknologi Bandung
+Dipatiukur
+Cisitu
+
+Matrix:
+0 1476 2418 
+1476 0 1888 
+2418 1888 0 
+
+Weight for each node:
+Institut Teknologi Bandung <-> Dipatiukur = 1476
+Institut Teknologi Bandung <-> Cisitu = 2418
+Dipatiukur <-> Cisitu = 1888
+
+======================= A* ========================
+Start node: Dipatiukur
+Stop node: Cisitu
+Shortest path: Dipatiukur -> Cisitu
+Total cost: 1888
+Number of calculations: 3
+Execution time: 0.00 ms
+Processor: Intel64 Family 6 Model 142 Stepping 12, GenuineIntel

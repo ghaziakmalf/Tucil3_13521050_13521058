@@ -1,4 +1,5 @@
 import requests
+import googlemaps
 
 from lib.colors import *
 from lib.splash import *
@@ -36,12 +37,11 @@ def main():
             # input location and route from map
             key = "AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs"
             gmapsClient = googlemaps.Client(key)
-            nodes, places_id, matrix, coordinates = inputMap(gmapsClient)
-            
+            nodes, matrix, coordinates = inputMap(gmapsClient)
             
             # build request
             url = "https://maps.googleapis.com/maps/api/staticmap?"
-            url += "&size=700x700" #define size
+            url += "&size=1000x1000" #define size
             url += "&markers=color:red%7Clabel:P" # define marker style
             
             for loc in coordinates:
@@ -91,8 +91,7 @@ def main():
                 url = addShortestPathUrl(coordinates,url,gmapsClient,path)
                 imageUrl = requests.get(url + f"&key={key}", stream=True).raw
                 imageUCS = Image.open(imageUrl)
-                imageUCS.show()
-            
+                imageUCS.show() 
 
             # Plot the graph
             plot("UNIFORM COST SEARCH", nodes, matrix, pathUCS, None)

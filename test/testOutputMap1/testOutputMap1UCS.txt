@@ -1,0 +1,23 @@
+Nodes:
+Institut Teknologi Bandung
+Masjid Salman
+Cisitu
+
+Matrix:
+0 357 2418 
+357 0 2279 
+2418 2279 0 
+
+Weight for each node:
+Institut Teknologi Bandung <-> Masjid Salman = 357
+Institut Teknologi Bandung <-> Cisitu = 2418
+Masjid Salman <-> Cisitu = 2279
+
+=============== UNIFORM COST SEARCH ===============
+Start node: Institut Teknologi Bandung
+Stop node: Cisitu
+Shortest path: Institut Teknologi Bandung -> Cisitu
+Total cost: 2418
+Number of calculations: 3
+Execution time: 0.00 ms
+Processor: Intel64 Family 6 Model 142 Stepping 12, GenuineIntel

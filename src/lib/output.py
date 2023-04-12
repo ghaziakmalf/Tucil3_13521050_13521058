@@ -138,6 +138,7 @@ def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matr
     f.write("Execution time: " + "{:.2f} ms".format(time * 1000) + "\n")
     f.write("Processor: " + str(platform.processor()))
 
+
 def addPathUrl(matrix, coordinates, url, gmapsClient):
     pathurl = url
     
@@ -150,6 +151,7 @@ def addPathUrl(matrix, coordinates, url, gmapsClient):
                 
     return pathurl
 
+
 def addShortestPathUrl(coordinates, url, gmapsClient, path):
     pathurl = url
 
@@ -159,8 +161,8 @@ def addShortestPathUrl(coordinates, url, gmapsClient, path):
     
     return pathurl
 
-def convertPathToInt(path, nodes):
 
+def convertPathToInt(path, nodes):
     intPath = []
 
     for el in path:

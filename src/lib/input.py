@@ -1,5 +1,4 @@
 import os
-import googlemaps
 
 from lib.colors import *
 
@@ -93,10 +92,12 @@ def inputManual():
     Input: -
     Output: Nodes name (array of string), adjacency matrix (matrix of integer)
     """
+
+    print("")
     while True:
         try:
             # Input number of nodes
-            num_nodes = input(WHITE + "\nEnter the number of nodes (>=3): " + RESET)
+            num_nodes = input(WHITE + "Enter the number of nodes (>=3): " + RESET)
 
             # Check if input is empty, raise error
             if (num_nodes == ""):
@@ -124,9 +125,9 @@ def inputManual():
                         print(LIGHT_RED + "\nInput has not been filled! Please re-enter." + RESET)
                         continue
 
-                    # Check if node name is already exist, raise error
+                    # Check if node name already exist, raise error
                     if node_name in nodes:
-                        print(LIGHT_RED + "\nNode name is already exist! Please re-enter." + RESET)
+                        print(LIGHT_RED + "\nNode name already exist! Please re-enter." + RESET)
                         continue
 
                     # If pass all the checks, break the loop
@@ -252,19 +253,11 @@ def inputStartStop(nodes):
             
             # Check if input is in range, raise error
             if (start < 0 or start >= len(nodes) or stop < 0 or stop >= len(nodes)):
-                raise ValueError("Input is not in range! Please re-enter.")
-
-            # Check if start and stop node is in nodes array, raise error
-            if (nodes[start] not in nodes and nodes[stop] not in nodes):
-                raise ValueError("Start and stop node is not in the graph! Please re-enter.")
+                raise ValueError("Input is not in range!")
             
-            # Check if start node is in nodes array, raise error
-            elif (nodes[start] not in nodes):
-                raise ValueError("Start node is not in the graph! Please re-enter.")
-            
-            # Check if stop node is in nodes array, raise error
-            elif (nodes[stop] not in nodes):
-                raise ValueError("Stop node is not in the graph! Please re-enter.")
+            # Check if start and stop node is the same, raise error
+            if (start == stop):
+                raise ValueError("Start and stop node must be different!")
             
             # If pass all the checks, break the loop
             else:
@@ -272,64 +265,174 @@ def inputStartStop(nodes):
 
         # For print error message
         except ValueError as e:
-            print(LIGHT_RED + "\n" + str(e) + RESET)
+            print(LIGHT_RED + "\n" + str(e) + " Please re-enter." + RESET)
             continue
 
     return nodes[start], nodes[stop]
 
 
 def inputMap(gmapsClient):
+    """
+    For handling input map
+    Input: gmapsClient (googlemaps.Client)
+    Output: locations_name (array of string), matrix (matrix of integer), coordinates (array of string)
+    """
 
-    print("Input a place, landmark, or address. Recommended to put spesific address or full name of a landmark")
-    print("landmark: Empire State Building, Insitut Teknologi Bandung, or Gedung Sate")
-    print("address: Jl.Cisitu, Dago, Coblong, Bandung Kidul (Complete Address)\n")
+    print("")
+    while True:
+        try:
+            # Input number of location
+            num_locations = input(WHITE + "Enter the number of locations (>=3): " + RESET)
 
-    n = int(input("How many place (node)? "))
+            # Check if input is empty, raise error
+            if (num_locations == ""):
+                raise ValueError("Input has not been filled!")
+            
+            # Check if input is integer, raise error
+            try:
+                num_locations = int(num_locations)
+            except ValueError:
+                raise ValueError("Input is not an integer!")
 
-    places_name = []
-    address = []
-    places_id = []
-    coordinates = []
-    matrix = [[0 for i in range (n)] for j in range (n)]
-    i = 0
+            # Check if number of location is less than 3, raise error
+            if num_locations < 3:
+                raise ValueError("Number of locations must be >=3!")
+            
+            print(LIGHT_GREEN + "\nInput a place, landmark, or address name. Recommended to put specific address or full name.")
+            print("Example: Institut Teknologi Bandung, Gedung Sate, Jl.Cisitu" + RESET)
 
-    # Input all nodes
-    for i in range(n):
-        while(True):
-            address_input = input("\nInsert location: ")
-            location = gmapsClient.geocode(address = address_input)
-            if location:
+            # Array for storing location name, address, id, and coordinates
+            locations_name = []
+            locations_id = []
+            address = []
+            coordinates = []
+
+            for i in range(num_locations):
+                print("")
+                while True:
+                    # Input location name
+                    location_name = input(f"{WHITE}Enter the name of location {i + 1}: {RESET}")
+                    location = gmapsClient.geocode(address = location_name)
+
+                    # Check if location is not found, raise error
+                    if (not location):
+                        print(LIGHT_RED + "\nLocation Not Found! Please re-enter." + RESET)
+                        continue
+
+                    # Check if input is empty, raise error
+                    if (location_name == ""):
+                        print(LIGHT_RED + "\nInput has not been filled! Please re-enter." + RESET)
+                        continue
+
+                    # Check if location name already exist, raise error
+                    if location_name in locations_name:
+                        print(LIGHT_RED + "\nLocation name already exist! Please re-enter." + RESET)
+                        continue
+
+                    # If pass all the checks, break the loop
+                    break
+
+                # Print location address
+                print(LIGHT_GREEN + "\nObtained Location Address: " + RESET)
+                print(WHITE + location[0]["formatted_address"] + RESET)
+
+                # Insert location name, address, coordinates, and id to array
+                address.append(location[0]["formatted_address"])
+                coordinates.append(str(location[0]["geometry"]["location"]["lat"]) + "," +str(location[0]["geometry"]["location"]["lng"]))
+                locations_name.append(location_name)
+                locations_id.append(location[0]['place_id'])
+            
+            # If reach this point, break the loop
+            break
+
+        except ValueError as e:
+            print(LIGHT_RED + "\n" + str(e) + " Please re-enter." + RESET)
+            continue
+
+    while (True):
+        print("")
+        while (True):
+            try:
+                # Input number of edge
+                num_edge = input(WHITE + "Enter the number of edges: " + RESET)
+            
+                # Check if input is empty, raise error
+                if (num_edge == ""):
+                    raise ValueError("Input has not been filled!")
+                
+                # Check if input is integer, raise error
+                try:
+                    num_edge = int(num_edge)
+                except ValueError:
+                    raise ValueError("Input is not an integer!")
+                
+                # Check if number of edge is less than 1, raise error
+                if num_edge < 1:
+                    raise ValueError("Number of edges must be >=1!")
+                
+                # Check if number of edge is more than n(n-1)/2, raise error
+                if (num_edge > (num_locations * (num_locations-1)/2)):
+                    raise ValueError("Number of edges must be <= n(n-1)/2!")
+                
+                # If pass all the checks, break the loop
                 break
-            else:
-                print("Location Not Found")
+                
+            # For print error message
+            except ValueError as e:
+                print(LIGHT_RED + "\n" + str(e) + " Please re-enter." + RESET)
+                continue
 
-        print("\nObtained Location Address: ")
-        print(location[0]["formatted_address"])
-        address.append(location[0]["formatted_address"])
-        coordinates.append(str(location[0]["geometry"]["location"]["lat"]) + "," +str(location[0]["geometry"]["location"]["lng"]))
-        places_name.append(address_input)
-        places_id.append(location[0]['place_id'])
+        # Print all location
+        print(WHITE + "\nList of Locations" + RESET)
+        for i in range(num_locations):
+            print(f"{LIGHT_RED}{i+1}. {WHITE}{locations_name[i]} ({address[i]}) {RESET}")
 
+        # Matrix for storing distance between locations
+        matrix = [[0 for i in range (num_locations)] for j in range (num_locations)]
 
-    # PRINT ALL NODE
-    print("List of Place")
-    for i in range(n):
-        print(f"{i+1}. {places_name[i]} ({address[i]})")
+        for i in range(num_edge):
+            while (True):
+                try:
+                    # Read location a and location b that wanted to be connected, and check if input is already filled
+                    try:
+                        location_a, location_b = input(WHITE + "Enter two locations to connect (e.g. 1 2): " + RESET).split()
+                    except ValueError:
+                        raise ValueError("Input has not been filled! Please re-enter.")
+                    
+                    # Check if input is integer, raise error
+                    try:
+                        location_a = int(location_a) - 1
+                        location_b = int(location_b) - 1
+                    except ValueError:
+                        raise ValueError("Input is not an integer! Please re-enter.")
+                    
+                    # Check if input is in range, raise error
+                    if (location_a < 0 or location_a >= len(locations_name) or location_b < 0 or location_b >= len(locations_name)):
+                        raise ValueError("Input is not in range! Please re-enter.")
+                    
+                    # Check if input is already connected, raise error
+                    if (matrix[location_a][location_b] != 0):
+                        raise ValueError("Locations is already connected! Please re-enter.")
+                    
+                    # Check if location_a and location_b is the same, raise error
+                    if (location_a == location_b):
+                        raise ValueError("Locations is the same! Please re-enter.")
+                    
+                    # If pass all the checks, break the loop
+                    break
 
-    # INPUT ROUTE
-    n = int(input("How many route (edge)? "))
-    for i in range(n):
-        while(True):
-            a, b = input("Input two place index to connect (e.g. 1 5) ").split()
-            a = int(a) 
-            b = int(b) 
+                # For print error message
+                except ValueError as e:
+                    print(LIGHT_RED + "\n" + str(e) + RESET)
+                    continue
+            
+            # Get distance between location_a and location_b
+            distance = gmapsClient.directions(coordinates[location_a],coordinates[location_b])[0]['legs'][0]['distance']['value']
 
-            if((a > 0 and a <= len(places_id) and b <= len(places_id) and b > 0) and a != b):
-                distance = gmapsClient.distance_matrix(f"place_id:{places_id[a-1]}", f"place_id:{places_id[b-1]}")["rows"][0]["elements"][0]['distance']['value']
-                matrix[a-1][b-1] = distance
-                matrix[b-1][a-1] = distance
-                break
-            else:
-                print("Input tidak dalam range")
+            # Insert distance to matrix
+            matrix[location_a][location_b] = distance
+            matrix[location_b][location_a] = distance
+        
+        break
     
-    return places_name, places_id, matrix, coordinates
+    return locations_name, matrix, coordinates

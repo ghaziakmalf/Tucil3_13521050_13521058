@@ -38,6 +38,9 @@ In summary, UCS is a graph search algorithm that finds the shortest path based o
 - matplotlib
 - networkx
 - time
+- googlemaps
+- requests
+- PILLOW
 
 ## Program Structure
 ```
@@ -46,28 +49,31 @@ In summary, UCS is a graph search algorithm that finds the shortest path based o
 │   ├── Tucil3_K2_13521050_13521058.pdf
 │   └── Tucil3-Stima-2023.pdf
 ├── src/
-│   ├── Javascript/
-│   └── Python/
-│       ├── lib/
-│       │   ├── astar.py
-│       │   ├── colors.py
-│       │   ├── command.py
-│       │   ├── input.py
-│       │   ├── output.py
-│       │   ├── splash.py
-│       │   └── ucs.py
-|       └── main.py
+│   ├── lib/
+│   │   ├── astar.py
+│   │   ├── colors.py
+│   │   ├── command.py
+│   │   ├── input.py
+│   │   ├── output.py
+│   │   ├── splash.py
+│   │   └── ucs.py
+|   └── main.py
 ├── test/
 │   ├── testInput/
 │   ├── testOutput/
 │   └── graph.txt
 ├── .gitignore
+├── requirements.txt
 ├── README.md
 ├── RunnerPy.bat
 └── RunnerPython.bat
 ```
 
 ## How To Run
+First install all of the libraries used in the program. Go to the _root directory_ (Tucil3_13521050_13521058) then install the libraries by running the command below in the terminal.
+```
+pip install -r requirements.txt
+```
 To run the program in the terminal _root directory_, run the command __RunnerPy.bat__ or __RunnerPython.bat__ (on windows). The runner used depends on the latest version of python on the PC (you can check using 'py --version' and 'python --version'), because on some PCs there is a difference between using py and python.
 ```
 ./RunnerPy.bat

@@ -129,3 +129,15 @@ def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matr
     f.write("Number of calculations: " + str(nCalc) + "\n")
     f.write("Execution time: " + "{:.2f} ms".format(time * 1000) + "\n")
     f.write("Processor: " + str(platform.processor()))
+
+def addPathUrl(matrix, coordinates, url, gmapsClient):
+    pathurl = url
+    
+    # find relation
+    for i in range (len(matrix)):
+        for j in range (len(matrix)):
+            if(i != j and i < j and matrix[i][j]):
+                enc = gmapsClient.directions(coordinates[i],coordinates[j])[0]["overview_polyline"]["points"]
+                pathurl += f"&path=color:blue%7Cenc:{enc}"
+                
+    return pathurl

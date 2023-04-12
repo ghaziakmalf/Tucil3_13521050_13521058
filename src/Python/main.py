@@ -34,7 +34,7 @@ def main():
 
         # Option 2: Google Maps input
         elif (option == 2):
-            
+
             # input location and route from map
             key = "AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs"
             gmapsClient = googlemaps.Client(key)
@@ -48,6 +48,8 @@ def main():
             
             for loc in coordinates:
                 url += f"%7C{loc}"
+
+            url = addPathUrl(matrix, coordinates,url,gmapsClient)
             
             url += f"&key={key}"
             

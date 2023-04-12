@@ -7,7 +7,7 @@ from lib.ucs import *
 from lib.astar import *
 from PIL import Image
 import matplotlib
-import io
+import requests
 import googlemaps
 
 def main():
@@ -34,24 +34,28 @@ def main():
 
         # Option 2: Google Maps input
         elif (option == 2):
-            # input location and route from map
-            gmapsClient = googlemaps.Client("AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs")
-            nodes, places_id, matrix = inputMap(gmapsClient)
             
-            # download image from google map
-            # f = open('map_buffer', 'wb')
-            # for iter in gmapsClient.static_map(size=(600,600),markers=places_id):
-            #     if iter:
-            #         f.write(iter)
-            # f.close()
+            # input location and route from map
+            key = "AIzaSyBQxvm6eP0nJzHve6JaETdGqa3NfWDyDMs"
+            gmapsClient = googlemaps.Client(key)
+            nodes, places_id, matrix, coordinates = inputMap(gmapsClient)
+            
+            
+            # build request
+            url = "https://maps.googleapis.com/maps/api/staticmap?"
+            url += "&size=700x700" #define size
+            url += "&markers=color:red%7Clabel:P" # define marker style
+            
+            for loc in coordinates:
+                url += f"%7C{loc}"
+            
+            url += f"&key={key}"
+            
+            # request image and show
+            imageUrl = requests.get(url, stream=True).raw
+            image = Image.open(imageUrl)
+            image.show()
 
-            # with open('map_buffer', 'rb') as f:
-            #     imageByte = bytearray(f.read())
-            # #image = Image.frombytes('RGB',(500,500),imageByte,'raw')
-            # image = Image.open(io.BytesIO(imageByte))
-            # image.show()
-
-            # plot the graph
             plot("", nodes, matrix, [], None)
 
         # Option 3: Manual input

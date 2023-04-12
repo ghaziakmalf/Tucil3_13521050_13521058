@@ -288,6 +288,7 @@ def inputMap(gmapsClient):
     places_name = []
     address = []
     places_id = []
+    coordinates = []
     matrix = [[0 for i in range (n)] for j in range (n)]
     i = 0
 
@@ -304,10 +305,10 @@ def inputMap(gmapsClient):
         print("\nObtained Location Address: ")
         print(location[0]["formatted_address"])
         address.append(location[0]["formatted_address"])
+        coordinates.append(str(location[0]["geometry"]["location"]["lat"]) + "," +str(location[0]["geometry"]["location"]["lng"]))
         places_name.append(address_input)
         places_id.append(location[0]['place_id'])
 
-    # input relations
 
     # PRINT ALL NODE
     print("List of Place")
@@ -330,4 +331,4 @@ def inputMap(gmapsClient):
             else:
                 print("Input tidak dalam range")
     
-    return places_name, places_id, matrix
+    return places_name, places_id, matrix, coordinates

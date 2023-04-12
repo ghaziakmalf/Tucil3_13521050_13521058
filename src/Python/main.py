@@ -49,10 +49,8 @@ def main():
 
             url = addPathUrl(matrix, coordinates,url,gmapsClient)
             
-            url += f"&key={key}"
-            
             # request image and show
-            imageUrl = requests.get(url, stream=True).raw
+            imageUrl = requests.get(url + f"&key={key}", stream=True).raw
             image = Image.open(imageUrl)
             image.show()
 
@@ -87,6 +85,15 @@ def main():
             # Print result
             printResult("UNIFORM COST SEARCH", start, stop, nCalcUCS, pathUCS, totalCostUCS, timeElapsed)
 
+            # Download Image maps
+            if(option == 2):
+                path = convertPathToInt(pathUCS, nodes)
+                url = addShortestPathUrl(coordinates,url,gmapsClient,path)
+                imageUrl = requests.get(url + f"&key={key}", stream=True).raw
+                imageUCS = Image.open(imageUrl)
+                imageUCS.show()
+            
+
             # Plot the graph
             plot("UNIFORM COST SEARCH", nodes, matrix, pathUCS, None)
 
@@ -104,6 +111,14 @@ def main():
             # Print result
             printResult("A*", start, stop, nCalcAStar, pathAStar, totalCostAStar, timeElapsed)
 
+            # image map
+            if(option == 2):
+                path = convertPathToInt(pathAStar, nodes)
+                url = addShortestPathUrl(coordinates,url,gmapsClient,path)
+                imageUrl = requests.get(url + f"&key={key}", stream=True).raw
+                imageAStar = Image.open(imageUrl)
+                imageAStar.show()
+
             # Plot the graph
             plot("A*", nodes, matrix, pathAStar, None)
         
@@ -118,11 +133,11 @@ def main():
 
             # Save Uniform Cost Search (UCS) result
             if (algorithm == 1) or (algorithm == 3):
-                saveResult("UNIFORM COST SEARCH", start, stop, nCalcUCS, pathUCS, totalCostUCS, timeElapsed, nodes, matrix, saveConfig)
+                saveResult("UNIFORM COST SEARCH", start, stop, nCalcUCS, pathUCS, totalCostUCS, timeElapsed, nodes, matrix, saveConfig, imageUCS, option)
             
             # Save A* result
             if (algorithm == 2) or (algorithm == 3):
-                saveResult("A*", start, stop, nCalcAStar, pathAStar, totalCostAStar, timeElapsed, nodes, matrix, saveConfig)
+                saveResult("A*", start, stop, nCalcAStar, pathAStar, totalCostAStar, timeElapsed, nodes, matrix, saveConfig, imageAStar, option)
             
             # Display message file saved
             print(LIGHT_GREEN + "\nAdditional Information Added into txt File" + RESET)

@@ -73,7 +73,7 @@ def printResult(algorithm, start, stop, nCalc, path, totalCost, time):
     print(WHITE + "Processor: " + YELLOW + str(platform.processor()) + RESET)
 
 
-def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matrix, saveConfig):
+def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matrix, saveConfig, mapImage, option):
     """
     Save result of algorithm
     Input: algorithm, start, stop, nCalc, path, totalCost, time, nodes, matrix, saveConfig
@@ -89,10 +89,18 @@ def saveResult(algorithm, start, stop, nCalc, path, totalCost, time, nodes, matr
     if algorithm == "A*":
         f = open("test/" + saveConfig + "/" + saveConfig + "AStar.txt", "w")
 
+        # save image
+        if(option == 2):
+            mapImage.save("test/" + saveConfig + "/" + saveConfig + "MapAStar.png")
+
         # Save plot
         plot(algorithm, nodes, matrix, path, "test/" + saveConfig + "/" + saveConfig + "AStar.png")
     else:
         f = open("test/" + saveConfig + "/" + saveConfig + "UCS.txt", "w")
+
+        # save image
+        if(option == 2):
+            mapImage.save("test/" + saveConfig + "/" + saveConfig + "MapUCS.png")
 
         # Save plot
         plot(algorithm, nodes, matrix, path, "test/" + saveConfig + "/" + saveConfig + "UCS.png")
@@ -141,3 +149,21 @@ def addPathUrl(matrix, coordinates, url, gmapsClient):
                 pathurl += f"&path=color:blue%7Cenc:{enc}"
                 
     return pathurl
+
+def addShortestPathUrl(coordinates, url, gmapsClient, path):
+    pathurl = url
+
+    for i in range(len(path)-1):
+        enc = gmapsClient.directions(coordinates[path[i]],coordinates[path[i+1]])[0]["overview_polyline"]["points"]
+        pathurl += f"&path=color:0xff0000ff%7Cenc:{enc}"
+    
+    return pathurl
+
+def convertPathToInt(path, nodes):
+
+    intPath = []
+
+    for el in path:
+        intPath.append(nodes.index(el))
+
+    return intPath

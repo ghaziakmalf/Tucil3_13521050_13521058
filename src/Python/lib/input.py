@@ -1,5 +1,6 @@
 import os
 import googlemaps
+
 from lib.colors import *
 
 def inputFile():
@@ -274,7 +275,7 @@ def inputStartStop(nodes):
             print(LIGHT_RED + "\n" + str(e) + RESET)
             continue
 
-    return start, stop
+    return nodes[start], nodes[stop]
 
 
 def inputMap(gmapsClient):

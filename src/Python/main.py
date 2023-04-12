@@ -1,3 +1,5 @@
+import requests
+
 from lib.colors import *
 from lib.splash import *
 from lib.command import *
@@ -6,9 +8,6 @@ from lib.output import *
 from lib.ucs import *
 from lib.astar import *
 from PIL import Image
-import matplotlib
-import requests
-import googlemaps
 
 def main():
     # Show splash screen
@@ -27,7 +26,6 @@ def main():
         # Option 1: File input
         if (option == 1):
             nodes, matrix = inputFile()
-            print(matrix)
             
             # Plot the graph
             plot("", nodes, matrix, [], None)

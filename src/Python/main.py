@@ -7,6 +7,7 @@ from lib.ucs import *
 from lib.astar import *
 from PIL import Image
 import matplotlib
+import io
 import googlemaps
 
 def main():
@@ -38,16 +39,17 @@ def main():
             nodes, places_id, matrix = inputMap(gmapsClient)
             
             # download image from google map
-            f = open('map_buffer', 'wb')
-            for iter in gmapsClient.static_map(size=(500,500),markers=places_id):
-                if iter:
-                    f.write(iter)
-            f.close()
+            # f = open('map_buffer', 'wb')
+            # for iter in gmapsClient.static_map(size=(600,600),markers=places_id):
+            #     if iter:
+            #         f.write(iter)
+            # f.close()
 
-            with open('map_buffer', 'rb') as f:
-                imageByte = bytearray(f.read())
-            image = Image.frombytes('RGB',(500,500),imageByte,'raw')
-            image.show()
+            # with open('map_buffer', 'rb') as f:
+            #     imageByte = bytearray(f.read())
+            # #image = Image.frombytes('RGB',(500,500),imageByte,'raw')
+            # image = Image.open(io.BytesIO(imageByte))
+            # image.show()
 
             # plot the graph
             plot("", nodes, matrix, [], None)

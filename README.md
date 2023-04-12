@@ -46,7 +46,7 @@ In summary, UCS is a graph search algorithm that finds the shortest path based o
 ```
 .
 ├── doc/
-│   ├── Tucil3_K2_13521050_13521058.pdf
+│   ├── Tucil3_13521050_13521058.pdf
 │   └── Tucil3-Stima-2023.pdf
 ├── src/
 │   ├── lib/
